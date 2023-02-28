@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {Form, Modal,Input, Select, message, Table} from 'antd'
-import {UnorderedListOutlined,AreaChartOutlined} from '@ant-design/icons'
+import {UnorderedListOutlined,AreaChartOutlined,EditOutlined,DeleteOutlined} from '@ant-design/icons'
 import { Layout } from '../components/Layout/Layout'
 import axios from 'axios'
 import Analytics from '../components/Analytics'
@@ -8,8 +8,9 @@ import Analytics from '../components/Analytics'
 export const HomePage = () => {
 
   const [showModal,setModal] = useState(false)
-  const [ allTransactions,setAllTransactions] = useState([])
-  const [viewData,setViewData] = useState('table')
+  const [allTransactions,setAllTransactions] = useState([])
+  const [viewData,setViewData] = useState('analytics')
+  const [editable,setEditable] = useState(null)
 
   //table data
   const columns = [
@@ -35,6 +36,15 @@ export const HomePage = () => {
     },
     {
       title:'Action',
+      render:(text,record) =>(
+        <div>
+          <EditOutlined onClick={()=> {
+            setEditable(record)
+            setModal(true)
+          }}/>
+          <DeleteOutlined className="mx-2"/>
+        </div>
+      )
       
     },
   
@@ -48,7 +58,7 @@ export const HomePage = () => {
       console.log(res.data)
     } catch (error) {
       console.log(error)
-      message.error('fetech issue')
+      message.error('fetch issue')
     }
   }
   //useEffect
@@ -60,9 +70,22 @@ export const HomePage = () => {
   const handleSubmit= async(values)=>{
     try {
       const user = JSON.parse(localStorage.getItem('user'))
-      const {userData} = await axios.post('/transaction/add-transaction', {...values, userId:user._id})
-      message.success("Transaction added succcessfully")
+      if(editable){
+        const {userData} = await axios.post('/transaction/edit-transaction', {
+          payload:{
+            ...values,userId:user._id
+          },
+          transactionId: editable._id
+        })
+      message.success("Transaction edited succcessfully")
       localStorage.setItem('tranc',JSON.stringify({...userData}))
+      }else{
+        const {userData} = await axios.post('/transaction/add-transaction', {...values, userId:user._id})
+        message.success("Transaction added succcessfully")
+        localStorage.setItem('tranc',JSON.stringify({...userData}))
+      }
+      setModal(false)
+      setEditable(null)
 
     } catch (error) {
       message.error('Failed to add transaction')
@@ -89,8 +112,8 @@ export const HomePage = () => {
           }
           
          </div>
-         <Modal title="Add Transaction" open={showModal} onCancel={() => setModal(false)} footer={false}>
-          <Form layout='vertical' onFinish={handleSubmit}>
+         <Modal title={editable ? 'Edit Transaction' : 'Add Transaction'} open={showModal} onCancel={() => setModal(false)} footer={false}>
+          <Form layout='vertical' onFinish={handleSubmit} initialValues={editable}>
             <Form.Item label='Amount' name= 'amount'>
               <Input type='text'/>
             </Form.Item>

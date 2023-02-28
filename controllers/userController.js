@@ -1,10 +1,10 @@
-const users = require('../models/users.js')
+const usersModel = require('../models/users.js')
 
 
 const loginController = async(req,res)=>{
     try {
         const {email,password}= req.body
-        const user = await users.findOne({email,password})
+        const user = await usersModel.findOne({email,password})
         if(!user){
             res.status(400).send('User Not Found')
         }
@@ -21,7 +21,7 @@ const loginController = async(req,res)=>{
 }
 const registerController = async(req,res)=>{
     try {
-        const newUser = new users(req.body)
+        const newUser = new usersModel(req.body)
         await newUser.save()
         res.status(201).json({
             success:true,

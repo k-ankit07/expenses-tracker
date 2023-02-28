@@ -28,7 +28,7 @@ useEffect(() =>{
     <div className='register'>
         
         <Form layout='vertical' onFinish={submitHandle}>
-        <h1>register page</h1>
+        <h1>Register page</h1>
             <Form.Item label="Name" name='name'>
                 <Input/>
             </Form.Item>

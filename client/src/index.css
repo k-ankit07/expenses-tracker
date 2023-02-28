@@ -6,6 +6,10 @@
 .content{
  height: 80vh;
 }
+
+p{
+  margin-right: 20px
+}
 .register{
   display: flex;
   align-items: center;

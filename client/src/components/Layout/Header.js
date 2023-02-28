@@ -26,7 +26,8 @@ export const Header = () => {
       <Link className="navbar-brand" to="/">Expenses Tracker</Link>
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <Link className="nav-link" to="/user">{loginUser && loginUser.name}</Link>
+        {" "}
+          <p className="nav-link">{loginUser && loginUser.name}</p>{" "}
         </li>
         <li className="nav-item">
           <button className='btn btn-primary' onClick={logoutHandle}>
