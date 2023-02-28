@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import{Form,Input, message } from "antd"
+import {Card} from 'antd'
 import { Link,useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -25,7 +26,7 @@ export const Login = () => {
   return (
     <>
     <div className='register'>
-        
+    <Card>
         <Form layout='vertical' onFinish={submitHandle}>
         <h1>Login page</h1>
             <Form.Item label="Email" name='email'>
@@ -39,6 +40,8 @@ export const Login = () => {
                 <button className='btn btn-primary'>Login</button>
             </div>
         </Form>
+    </Card>
+      
     </div>
     </>
   )

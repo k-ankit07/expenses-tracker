@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { UserOutlined } from '@ant-design/icons'
 
 export const Header = () => {
   const [loginUser,setLoginUser] = useState('')
@@ -25,9 +26,11 @@ export const Header = () => {
      <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
       <Link className="navbar-brand" to="/">Expenses Tracker</Link>
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li className="nav-item">
+      <UserOutlined />
+        </li>
         <li className="nav-item">
-        {" "}
-          <p className="nav-link">{loginUser && loginUser.name}</p>{" "}
+        <p className="nav-link">{loginUser && loginUser.name}</p>
         </li>
         <li className="nav-item">
           <button className='btn btn-primary' onClick={logoutHandle}>
