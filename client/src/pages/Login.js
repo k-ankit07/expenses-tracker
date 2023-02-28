@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import{Form,Input, message } from "antd"
 import { Link,useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -9,12 +9,18 @@ export const Login = () => {
        try {
             const {data} = await axios.post('/users/login',values)
             message.success('Login successfull')
-            localStorage.setItem('user',JSON.stringify({...data,password:''}))
+            localStorage.setItem('user',JSON.stringify({...data.user,password:''}))
             navigate('/')
        } catch (error) {
         message.error('Invalid')
        }
     }
+    //loged in
+    useEffect(() =>{
+    if(localStorage.getItem('user')){
+        navigate('/')
+    }
+},[navigate])
 
   return (
     <>

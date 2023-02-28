@@ -2,6 +2,7 @@ import React from 'react'
 import{Form,Input, message } from "antd"
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useEffect } from 'react'
 
 export const Register = () => {
 
@@ -15,6 +16,12 @@ export const Register = () => {
             message.error('Invalid')
         }
     }
+//loged in
+useEffect(() =>{
+    if(localStorage.getItem('user')){
+        navigate('/')
+    }
+},[navigate])
 
   return (
     <>

@@ -1,7 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useState,useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 export const Header = () => {
+  const [loginUser,setLoginUser] = useState('')
+  const navigate=useNavigate()
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if(user){
+      setLoginUser(user)
+    }
+  },[])
+  const logoutHandle= ()=>{
+    localStorage.removeItem('user')
+    navigate('/login')
+  }
   return (
     <>
   <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -11,12 +24,14 @@ export const Header = () => {
       </button>
      <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
       <Link className="navbar-brand" to="/">Expenses Dashboard</Link>
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <Link className="nav-link" to="/user">Link</Link>
+          <Link className="nav-link" to="/user">{loginUser && loginUser.name}</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link disabled">Disabled</Link>
+          <button className='btn btn-primary' onClick={logoutHandle}>
+            Logout
+          </button>
         </li>
       </ul>
      </div>
