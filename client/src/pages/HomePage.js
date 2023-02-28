@@ -53,7 +53,7 @@ export const HomePage = () => {
   const getAllTransactions = async () =>{
     try {
       const user = JSON.parse(localStorage.getItem('user'))
-      const res = await axios.post('/transaction/get-transaction',{userId:user._id})
+      const res = await axios.post('api/v1/transaction/get-transaction',{userId:user._id})
       setAllTransactions(res.data)
       console.log(res.data)
     } catch (error) {
@@ -71,7 +71,7 @@ export const HomePage = () => {
     try {
       const user = JSON.parse(localStorage.getItem('user'))
       if(editable){
-        const {userData} = await axios.post('/transaction/edit-transaction', {
+        const {userData} = await axios.post('api/v1/transaction/edit-transaction', {
           payload:{
             ...values,userId:user._id
           },
@@ -80,7 +80,7 @@ export const HomePage = () => {
       message.success("Transaction edited succcessfully")
       localStorage.setItem('tranc',JSON.stringify({...userData}))
       }else{
-        const {userData} = await axios.post('/transaction/add-transaction', {...values, userId:user._id})
+        const {userData} = await axios.post('api/v1/transaction/add-transaction', {...values, userId:user._id})
         message.success("Transaction added succcessfully")
         localStorage.setItem('tranc',JSON.stringify({...userData}))
       }

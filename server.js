@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const bodyParser = require("body-parser")
+const path = require('path')
 const dotenv =require('dotenv')
 const connectDb = require('./config/connectDb')
 
@@ -32,6 +33,13 @@ app.use('/api/v1/users', require('./routes/userRoute'))
 
 //transaction routes
 app.use('/api/v1/transaction', require('./routes/transactionRoute'))
+
+//static files
+app.use(express.static(path.join(__dirname,'./client/build')))
+
+app.get('*', function(req,res){
+    res.sendFile(path.join(__dirname,'./client/build/index.html'))
+})
 
 
 

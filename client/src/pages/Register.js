@@ -9,7 +9,7 @@ export const Register = () => {
     const navigate = useNavigate()
     const submitHandle= async(values)=>{
         try {
-            await axios.post('/users/register', values)
+            await axios.post('api/v1/users/register', values)
             message.success('Registeration Successfull')
             navigate('/login')
         } catch (error) {
