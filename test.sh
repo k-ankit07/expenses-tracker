@@ -3,5 +3,3 @@
   npm install
   echo "Running code"
   npm run dev
-  echo "Build"
-  npm run build
