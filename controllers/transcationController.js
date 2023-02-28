@@ -14,7 +14,7 @@ const getAllTransaction = async(req,res) =>{
  
 const addTransaction = async(req,res) =>{
     try {
-        const newTransaction = new transactions(req.body)
+        const newTransaction = new transactionsModel(req.body)
         await newTransaction.save()
         res.status(201).send('Transactions Created')
     } catch (error) {
